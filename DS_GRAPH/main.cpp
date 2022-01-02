@@ -77,6 +77,127 @@ void depth_first_search(vector<int> list[], int v, int node = 0)
         }
     }
 }
+
+// Cycle detection using DFS
+bool _hc(vector<int> list[], vector<bool> visited, int parent, int node)
+{
+    visited[node] = true;
+    for (int i : list[node])
+    {
+        if (visited[i])
+        {
+            if (i != parent)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if (_hc(list, visited, node, i))
+                return true;
+        }
+    }
+    return false;
+}
+
+bool has_cycle(vector<int> list[], int v)
+{
+    vector<bool> visited(v, false);
+
+    for (int i = 0; i < v; i++)
+    {
+        if (!visited[i] && _hc(list, visited, -1, i))
+            return true;
+    }
+    return false;
+}
+
+// Cycle detection using BFS
+bool detect_cycle_bfs(vector<int> list[], int v)
+{
+    vector<bool> visited(v, false);
+
+    for (int j = 0; j < v; j++)
+    {
+        if (!visited[j])
+        {
+            queue<pair<int, int>> q;
+            //{Node,Parent}
+            q.push({j, -1});
+            visited[j] = true;
+
+            while (!q.empty())
+            {
+                int node = q.front().first;
+                int parent = q.front().second;
+                q.pop();
+                for (auto &i : list[node])
+                {
+                    if (!visited[i])
+                    {
+                        q.push({i, node});
+                        visited[i] = true;
+                    }
+                    else
+                    {
+                        if (i != parent)
+                            return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool is_bipartite(vector<int> list[], int v)
+{
+    vector<short> visited(v, -1);
+    queue<int> q;
+    q.push(0);
+    visited[0] = 0;
+    while (!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+        for (int i : list[node])
+        {
+            if (visited[i] != -1)
+            {
+                if (visited[i] == visited[node])
+                    return false;
+            }
+            else
+            {
+                q.push(i);
+                visited[i] = !visited[node];
+            }
+        }
+    }
+    return true;
+}
+
+int shortest_path_bfs(vector<int> list[], int v, int start)
+{
+    queue<int> q;
+    vector<int> path(v, INT_MAX);
+    q.push(start);
+    path[start] = 0;
+    while (!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+        for (int i : list[node])
+        {
+            if (path[i] > path[node] + 1)
+            {
+                path[i] = path[node] + 1;
+                q.push(i);
+            }
+        }
+    }
+}
+
 int main()
 {
     int v, e;
@@ -106,8 +227,6 @@ int main()
             --i;
         }
     }
-    breadth_first_search(list, v, 0);
-    cout << "\n";
-    depth_first_search(list, v, 8);
+
     return 0;
 }

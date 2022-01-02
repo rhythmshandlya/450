@@ -1,87 +1,26 @@
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
-class Solution
-{
-public:
-    string getLetter(int n)
-    {
-        switch (n)
-        {
-        case 2:
-            return "abc";
-            break;
-        case 3:
-            return "def";
-            break;
-        case 4:
-            return "ghi";
-            break;
-        case 5:
-            return "jkl";
-            break;
-        case 6:
-            return "mno";
-            break;
-        case 7:
-            return "pqrs";
-            break;
-        case 8:
-            return "tuv";
-            break;
-        case 9:
-            return "wxyz";
-            break;
-        }
-        return "";
-    }
-    vector<string> possibleWords(int a[], int N)
-    {
-        vector<string> ans{""};
-        for (int i = 0; i < N; i++)
-        {
-            string str = getLetter(a[i]);
-            int l = ans.size();
-            for (int j = 0; j < l; j++)
-            {
-                for (int k = 0; k < str.size(); k++)
-                    ans.push_back(ans[0] + str[k]);
-
-                ans.erase(ans.begin());
-            }
-        }
-        return ans;
-    }
-};
-
+// this print the "queries[i] index" of the forward rotated array "arr".
 int main()
 {
-
-    int T;
-
-    cin >> T; //testcases
-
-    while (T--)
-    { //while testcases exist
-        int N;
-        cin >> N; //input size of array
-
-        int a[10000]; //declare the array
-
-        for (int i = 0; i < N; i++)
-        {
-            cin >> a[i]; //input the elements of array that are keys to be pressed
-        }
-
-        Solution obj;
-
-        vector<string> res = obj.possibleWords(a, N);
-        for (string i : res)
-            cout << i << " ";
-        cout << endl;
+    int n, k, q, i;
+    int *arr;
+    arr = (int *)malloc((n + 1) * sizeof(int));
+    int queries;
+    int final_index;
+    scanf("%d %d %d", &n, &k, &q);
+    /****INPUT*****/
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+    for (i = 0; i < q; i++)
+    {
+        scanf("%d", &queries);
+        final_index = (k + queries) % n;
+        printf("%d\n", arr[final_index]);
     }
 
     return 0;
-} // } Driver Code Ends
+}

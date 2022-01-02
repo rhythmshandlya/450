@@ -7,14 +7,15 @@
 using namespace std;
 typedef long long int lli;
 /*
-    1)bubbleSort
-    2)selectionSort
-    3)insersionSort
-    4)mergeSort
-    5)quickSort
-    6)countSort
-    7)redixSort
-    8)bucketSort
+    1)BubbleSort
+    2)SelectionSort
+    3)InsersionSort
+
+    4)MergeSort
+    5)QuickSort
+    6)CountSort
+    7)RedixSort
+    8)BucketSort
 */
 
 /*
@@ -25,7 +26,7 @@ typedef long long int lli;
 */
 void bubbleSort(vector<int> &arr)
 {
-    //flag to stop iteration when the array is already sorted,this is determined is no swaps are made.
+    // flag to stop iteration when the array is already sorted,this is determined is no swaps are made.
     bool swapped = false;
 
     /*
@@ -54,7 +55,7 @@ void bubbleSort(vector<int> &arr)
     SELECTION SORT
     O(n^2)
     The selection sort algorithm sorts an array by repeatedly finding the minimum element from
-    unsorted part and putting it at the beginning. The algorithm maintains two subarrays 
+    unsorted part and putting it at the beginning. The algorithm maintains two subarrays
     in a given array.
     1) The subarray which is already sorted.
     2) Remaining subarray which is unsorted.
@@ -83,7 +84,7 @@ void selectionSort(vector<int> &arr)
             if (arr[minIndex] > arr[j])
                 minIndex = j;
 
-        //Swapping the min element in the unsorted subarray to the beginning of the subarray.
+        // Swapping the min element in the unsorted subarray to the beginning of the subarray.
         swap(arr[i], arr[minIndex]);
     }
 }
@@ -93,17 +94,17 @@ void selectionSort(vector<int> &arr)
     The array is virtually split into a sorted and an unsorted part.
     Values from the unsorted part are picked and placed at the correct position in the sorted part.
 
-    To sort an array of size n in ascending order: 
-    1: Iterate from arr[1] to arr[n] over the array. 
-    2: Compare the current element (key) to its predecessor. 
-    3: If the key element is smaller than its predecessor,shift the element to right and compare 
+    To sort an array of size n in ascending order:
+    1: Iterate from arr[1] to arr[n] over the array.
+    2: Compare the current element (key) to its predecessor.
+    3: If the key element is smaller than its predecessor,shift the element to right and compare
        it to the elements before. Move the greater elements one position up to make space for
        the swapped element.
 */
 void insersionSort(vector<int> &arr)
 {
     /*
-        Picking elements from the unsorted sub-array storing it in val in every iteration. 
+        Picking elements from the unsorted sub-array storing it in val in every iteration.
     */
     for (int i = 1; i < arr.size(); i++)
     {
@@ -126,7 +127,7 @@ void insersionSort(vector<int> &arr)
 
 /*
     MERGE SORT
-    Merge Sort is a Divide and Conquer algorithm. It divides the input array into two halves, 
+    Merge Sort is a Divide and Conquer algorithm. It divides the input array into two halves,
     calls itself for the two halves, and then merges the two sorted halves. The mergeSortUtility() function
     is used for merging two halves.
 */
@@ -169,13 +170,13 @@ void realMergeSort(vector<int> &vec, int first, int last)
 
     int mid = (first + last) / 2;
 
-    //Calling mergeSort on first part of the array.
+    // Calling mergeSort on first part of the array.
     realMergeSort(vec, first, mid);
 
-    //Calling mergeSort in second part of the array.
+    // Calling mergeSort in second part of the array.
     realMergeSort(vec, mid + 1, last);
 
-    //Function to merge the above two parts sub-array and constructing a single sorted array.
+    // Function to merge the above two parts sub-array and constructing a single sorted array.
     mergeSortUtility(vec, first, mid, last);
 }
 /*
@@ -222,7 +223,7 @@ void quickSort(vector<int> &vec)
 
 /*
     Bucket sort is mainly useful when input is uniformly distributed over a range.
-    Like sorting a large set of floating point numbers which are in range from 0.0 to 1.0 
+    Like sorting a large set of floating point numbers which are in range from 0.0 to 1.0
     and are uniformly distributed across the range.
 */
 void insersionSortList(list<double> li)
@@ -259,24 +260,24 @@ void bucketSort(vector<double> &arr)
 
 /*
     COUNT SORT O(N+k)
-    Counting sort is a sorting technique based on keys between a specific range. It works 
+    Counting sort is a sorting technique based on keys between a specific range. It works
     by counting the number of objects having distinct key values.Then doing some arithmetic
     to calculate the position of each object in the output sequence.
     It is a stable algorithm.
 */
 vector<int> countSort(vector<int> &vec, int min, int max)
 {
-    //Determine the range;
+    // Determine the range;
     int range = max - min + 1;
 
-    //Allocating memory for the vector which will store the number of occourances numbers.
-    vector<int> count(range, 0), ans(vec.size()); //answer vector
+    // Allocating memory for the vector which will store the number of occourances numbers.
+    vector<int> count(range, 0), ans(vec.size()); // answer vector
 
-    //Storing the frequency of every element in the range
+    // Storing the frequency of every element in the range
     for (int i = 0; i < vec.size(); i++)
         count[vec[i] - min]++;
 
-    //Converting the count array into a prefix-sum array
+    // Converting the count array into a prefix-sum array
     for (int i = 1; i < count.size(); i++)
         count[i] += count[i - 1];
     /*
@@ -292,7 +293,7 @@ vector<int> countSort(vector<int> &vec, int min, int max)
 }
 /*
     Radix Sort
-    The idea of Radix Sort is to do digit by digit sort starting from least significant 
+    The idea of Radix Sort is to do digit by digit sort starting from least significant
     digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.
 */
 /*
@@ -301,7 +302,7 @@ vector<int> countSort(vector<int> &vec, int min, int max)
 */
 void countSort(vector<int> &vec, int exp)
 {
-    //The compariso is of the digits soo 0-9 are the only keys required.
+    // The compariso is of the digits soo 0-9 are the only keys required.
     vector<int> count(10, 0), ans(vec.size());
 
     for (int i = 0; i < vec.size(); i++)
@@ -346,13 +347,13 @@ int main()
         arr[i] = rand() % 100;
         cout << arr[i] << " ";
     }
-    //bubbleSort(arr);
-    //selectionSort(arr);
-    //insersionSort(arr);
-    //mergeSort(arr);
-    //quickSort(arr);
-    //arr = countSort(arr, 0, 100);
-    //redixSort(arr);
+    // bubbleSort(arr);
+    // selectionSort(arr);
+    // insersionSort(arr);
+    // mergeSort(arr);
+    // quickSort(arr);
+    // arr = countSort(arr, 0, 100);
+    // redixSort(arr);
     cout << "\n\n\n\n";
     for (int i = 0; i < n; i++)
     {
@@ -366,7 +367,7 @@ int main()
     for (int i = 0; i < b.size(); i++)
     {
         cout << b[i] << " ";
-    } 
+    }
     */
     cout << endl;
     system("pause");
