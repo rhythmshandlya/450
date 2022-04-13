@@ -10,7 +10,6 @@ typedef long long int lli;
     1)BubbleSort
     2)SelectionSort
     3)InsersionSort
-
     4)MergeSort
     5)QuickSort
     6)CountSort
@@ -24,6 +23,7 @@ typedef long long int lli;
     The Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements
     if they are in wrong order.
 */
+
 void bubbleSort(vector<int> &arr)
 {
     // flag to stop iteration when the array is already sorted,this is determined is no swaps are made.
@@ -136,6 +136,7 @@ void insersionSort(vector<int> &arr)
     Utility function to merget two sorted sub-array into one.
     arrayOne[first...mid] and arrayTwo[mid+1...last].
 */
+
 void mergeSortUtility(vector<int> &vec, int first, int mid, int last)
 {
     vector<int> newVec(last - first + 1);
@@ -148,7 +149,6 @@ void mergeSortUtility(vector<int> &vec, int first, int mid, int last)
         if (vec[j] < vec[i])
             newVec.at(k++) = vec.at(j++);
     }
-
     while (i <= mid)
     {
         newVec.at(k++) = vec.at(i++);
@@ -192,8 +192,8 @@ void mergeSort(vector<int> &vec)
     The key process in quickSort is partition(). Target of partitions is, given an array and
     an element x of array as pivot, put x at its correct position in sorted array and put all
     smaller elements (smaller than x) before x, and put all greater elements (greater than x)
-    after x. All this should be done in linear time.
-    After partition we just apply quickSort() on the remaining sub-array
+    after x. All this should be done in linear time. After partition we just apply quickSort()
+    on the remaining sub-array
 */
 
 int partition(vector<int> &arr, int first, int last)
@@ -208,6 +208,7 @@ int partition(vector<int> &arr, int first, int last)
     swap(arr[last], arr[i]);
     return i;
 }
+
 void realQuickSort(vector<int> &vec, int first, int last)
 {
     if (first >= last)
@@ -216,6 +217,7 @@ void realQuickSort(vector<int> &vec, int first, int last)
     realQuickSort(vec, first, pvtIndex - 1);
     realQuickSort(vec, pvtIndex + 1, last);
 }
+
 void quickSort(vector<int> &vec)
 {
     realQuickSort(vec, 0, vec.size() - 1);
@@ -277,10 +279,13 @@ vector<int> countSort(vector<int> &vec, int min, int max)
     for (int i = 0; i < vec.size(); i++)
         count[vec[i] - min]++;
 
-    // Converting the count array into a prefix-sum array
+    // TO MAKE THIS ALGO INPLACE
+    //  Converting the count array into a prefix-sum array
     for (int i = 1; i < count.size(); i++)
         count[i] += count[i - 1];
     /*
+        For the algo to be stable we must not disrupt the sequence in which the numbers
+        appear in the original array. Though the nu
         For the algo to be stable we must not disrupt the sequence in which the numbers
         appear in the original array. Though the numbers are equal the might be associated
         with some other property whose order must not be disrupted. Like if we arragge
@@ -291,6 +296,7 @@ vector<int> countSort(vector<int> &vec, int min, int max)
 
     return ans;
 }
+
 /*
     Radix Sort
     The idea of Radix Sort is to do digit by digit sort starting from least significant
@@ -324,6 +330,7 @@ void redixSort(vector<int> &vec)
     for (int i = 0; i < vec.size(); i++)
         if (max < vec[i])
             max = vec[i];
+
     int exp = 1;
     /*
         Applying count sort on the array for N number of times.
@@ -340,7 +347,7 @@ void redixSort(vector<int> &vec)
 int main()
 {
     srand(time(0));
-    int n = 1000;
+    int n = 10000000;
     vector<int> arr(n);
     for (int i = 0; i < n; i++)
     {
@@ -353,7 +360,7 @@ int main()
     // mergeSort(arr);
     // quickSort(arr);
     // arr = countSort(arr, 0, 100);
-    // redixSort(arr);
+    redixSort(arr);
     cout << "\n\n\n\n";
     for (int i = 0; i < n; i++)
     {
